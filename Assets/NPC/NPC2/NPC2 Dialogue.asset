@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0e4481142d525f4ea2b6cc3f48c2bc6, type: 3}
+  m_Name: NPC2 Dialogue
+  m_EditorClassIdentifier: 
+  npcName: Jane Test
+  dialogueLines:
+  - Huh!
+  - I just saw you delete that guy!
+  - Did you know that was a placeholder sprite asset? The final enemies will look
+    different!
+  - Anyway, have a good day!
+  autoProgressLines: 01010100
+  endDialogueLines: 00000001
+  autoProgressDelay: 1.5
+  typingSpeed: 0.05
+  choices: []

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class NPC : MonoBehaviour, IInteractable
 {
@@ -46,7 +47,7 @@ public class NPC : MonoBehaviour, IInteractable
         // pause the game so the player can't move while NPC is talking
         PauseController.SetPause(true);
 
-        StartCoroutine(TypeLine());
+        DisplayCurrentLine();
     }
 
     void NextLine()
@@ -58,13 +59,57 @@ public class NPC : MonoBehaviour, IInteractable
             dialogueUI.SetDialogueText(dialogueData.dialogueLines[dialogueIndex]);
             isTyping = false;
         }
-        else if (++dialogueIndex < dialogueData.dialogueLines.Length)
+        
+        // Clear choices
+        dialogueUI.ClearChoices();
+
+        // Check endDialogueLines
+        if(dialogueData.endDialogueLines.Length > dialogueIndex && dialogueData.endDialogueLines[dialogueIndex])
+        {
+            EndDialogue();
+            return;
+        }
+
+        // Check if choices & display
+        foreach(DialogueChoice dialogueChoice in dialogueData.choices)
+        {
+            if(dialogueChoice.dialogueIndex == dialogueIndex)
+            {
+                // display choices
+                DisplayChoices(dialogueChoice);
+                return;
+            }
+        }
+
+        if (++dialogueIndex < dialogueData.dialogueLines.Length)
         {
             // is there another line to go to? if so, then:
-            StartCoroutine(TypeLine());
+            DisplayCurrentLine();
         }
         else // no more lines or not typing to autocomplete
             EndDialogue();
+    }
+
+    void DisplayChoices(DialogueChoice choice)
+    {
+        for(int i = 0;  i < choice.choices.Length; i++)
+        {
+            int nextIndex = choice.nextDialogueIndexes[i];
+            dialogueUI.CreateChoiceButton(choice.choices[i], ()  => ChooseOption(nextIndex));
+        }
+    }
+
+    void ChooseOption(int nextIndex)
+    {
+        dialogueIndex = nextIndex;
+        dialogueUI.ClearChoices();
+        DisplayCurrentLine();
+    }
+
+    void DisplayCurrentLine()
+    {
+        StopAllCoroutines();
+        StartCoroutine(TypeLine());
     }
 
     IEnumerator TypeLine()

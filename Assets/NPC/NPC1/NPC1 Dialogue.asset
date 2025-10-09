@@ -15,7 +15,16 @@ MonoBehaviour:
   npcName: John Test
   dialogueLines:
   - Wow! This is a test!
-  - Bye!!
-  autoProgressLines: 0100
+  - Choose an option!
+  - Good job!!
+  - OK!!
+  autoProgressLines: 01010000
+  endDialogueLines: 00000101
   autoProgressDelay: 1.5
   typingSpeed: 0.05
+  choices:
+  - dialogueIndex: 1
+    choices:
+    - Yes
+    - No
+    nextDialogueIndexes: 0200000003000000

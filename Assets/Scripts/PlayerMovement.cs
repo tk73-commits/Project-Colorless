@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
+    bool isFacingRight = false; // if your sprite faces left by default, set this to false; otherwise true
 
     [Header("Movement")]
     public float moveSpd = 5f;
@@ -37,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2(horizontalMvmt * moveSpd, rb.velocity.y);
         GroundCheck();
         Gravity();
+        Flip();
 
         //animator.SetBool("isWalking", rb.velocity.magnitude > 0);
     }
@@ -82,6 +84,17 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             rb.gravityScale = baseGrav;
+        }
+    }
+
+    private void Flip()
+    {
+        if(isFacingRight && horizontalMvmt < 0 || !isFacingRight && horizontalMvmt > 0)
+        {
+            isFacingRight = !isFacingRight;
+            Vector3 ls = transform.localScale;
+            ls.x *= -1f;    // just makes the transform negative so it faces the other way
+            transform.localScale = ls;
         }
     }
     
