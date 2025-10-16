@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovementOld : MonoBehaviour
 {
     public Rigidbody2D rb;
     bool isFacingRight = false; // if your sprite faces left by default, set this to false; otherwise true
@@ -21,11 +21,26 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheckPos;
     public Vector2 groundCheckSize = new Vector2(0.5f, 0.05f);
     public LayerMask groundLayer;
+    bool isGrounded;
+
+    [Header("WallCheck")]
+    public Transform wallCheckPos;
+    public Vector2 wallCheckSize = new Vector2(0.5f, 0.05f);
+    public LayerMask wallLayer;
 
     [Header("Gravity")]
     public float baseGrav = 2f;
     public float maxFallSpd = 10f;
     public float fallSpdMultiplier = 2f;
+
+    [Header("WallMovement")]
+    public float wallSlideSpeed = 2f;
+    bool isWallSliding;
+    bool isWallJumping;
+    float wallJumpDirection;
+    float wallJumpTime = 0.5f;
+    float wallJumpTimer;
+    public Vector2 wallJumpPower = new Vector2(5f, 10f);
 
     void Update()
     {
@@ -35,10 +50,16 @@ public class PlayerMovement : MonoBehaviour
             //animator.SetBool("isWalking", false);
         }
 
-        rb.velocity = new Vector2(horizontalMvmt * moveSpd, rb.velocity.y);
         GroundCheck();
         Gravity();
-        Flip();
+        ProcessWallSlide();
+        ProcessWallJump();
+
+        if (!isWallJumping)
+        {
+            rb.velocity = new Vector2(horizontalMvmt * moveSpd, rb.velocity.y);
+            Flip();
+        }
 
         //animator.SetBool("isWalking", rb.velocity.magnitude > 0);
     }
@@ -64,6 +85,16 @@ public class PlayerMovement : MonoBehaviour
                 jumpsRemaining--;
             }
         }
+
+        // wall jump logic
+        if (context.performed && wallJumpTimer > 0f)
+        {
+            isWallJumping = true;
+            rb.velocity = new Vector2(wallJumpDirection * wallJumpPower.x, wallJumpPower.y);
+            wallJumpTimer = 0f;
+
+            Invoke(nameof(CancelWallJump), wallJumpTime + 0.1f);
+        }
     }
 
     private void GroundCheck()
@@ -71,8 +102,46 @@ public class PlayerMovement : MonoBehaviour
         if (Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer))
         {
             jumpsRemaining = maxJumps;
+            isGrounded = true;
         }
+        else
+            isGrounded = false;
     }
+
+    private bool WallCheck()
+    {
+        return Physics2D.OverlapBox(wallCheckPos.position, wallCheckSize, 0, wallLayer);
+    }
+
+    private void ProcessWallSlide()
+    {
+        if (!isGrounded && WallCheck() && horizontalMvmt != 0)
+        {
+            isWallSliding = true;
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Max(rb.velocity.y, -wallSlideSpeed));
+        }
+        else
+            isWallSliding = false;
+    }
+
+    public void ProcessWallJump()
+    {
+        if (isWallSliding)
+        {
+            isWallJumping = false;
+            wallJumpDirection = -transform.localScale.x;
+            wallJumpTimer = wallJumpTime;
+
+            CancelInvoke(nameof(CancelWallJump));
+        }
+        else if (wallJumpTimer > 0)
+            wallJumpTimer -= Time.deltaTime;
+    }
+
+    private void CancelWallJump()
+    {
+        isWallJumping = false;
+    }    
 
     private void Gravity() //ProcessGravity in tutorial
     {
@@ -102,5 +171,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Gizmos.color = Color.white;
         Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSize);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(wallCheckPos.position, wallCheckSize);
     }
 }
