@@ -12,11 +12,16 @@ public class MenuController : MonoBehaviour
         menuCanvas.SetActive(false);
     }
 
-    public void ActivateMenu(InputAction.CallbackContext context)
+    private void Update()
     {
-        if(context.performed)
+        if (InputManager.MenuWasPressed)
         {
-            menuCanvas.SetActive(!menuCanvas.activeSelf);
+            ActivateMenu();
         }
+    }
+
+    public void ActivateMenu()
+    {
+        menuCanvas.SetActive(!menuCanvas.activeSelf);
     }
 }

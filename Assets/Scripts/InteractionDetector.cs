@@ -13,16 +13,21 @@ public class InteractionDetector : MonoBehaviour
         interactIcon.SetActive(false);
     }
 
-    public void OnInteract(InputAction.CallbackContext context)
+    private void Update()
     {
-        if(context.performed)
+        if (InputManager.InteractWasPressed)
         {
+            OnInteract();
+        }
+    }
+
+    public void OnInteract()
+    {
             interactableInRange?.Interact();
 
             // Makes icon disappear on interaction; use for chests or treasure or w/e
             if (!interactableInRange.CanInteract())
                 interactIcon.SetActive(false);
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -5,41 +5,45 @@ using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
+    public PlayerAttackStats AttackStats;
+
     [Header("Cooldown Timer")]
-    private float attackCooldown;
-    public float startAttackCooldown;
+    private bool _isMeleeAttacking;
+    [SerializeField] private float _meleeAttackCooldown = 0.2f;
 
     [Header("Attack Hitbox")]
     public Transform attackPos;
     public LayerMask enemyLayers;
     public float attackRange;
 
-    [Header("Attack Damage Value")]
-    public int attackDamage = 40;
-
-    void Update()
+    private void FixedUpdate()
     {
-        if(attackCooldown > 0)
+        if (InputManager.AttackWasPressed)
         {
-            //Attack();
+            if (!_isMeleeAttacking && _meleeAttackCooldown > 0)
+            {
+                MeleeAttack();
+            }
+
+            ResetCooldown();
         }
     }
 
-    public void Attack(InputAction.CallbackContext context)
+    public void MeleeAttack()
     {
-        if (context.performed)
+        _isMeleeAttacking = true;
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPos.position, attackRange, enemyLayers);
+        for(int i = 0; i < hitEnemies.Length; i++)
         {
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPos.position, attackRange, enemyLayers);
-            for(int i = 0; i < hitEnemies.Length; i++)
-            {
-                hitEnemies[i].GetComponent<Enemy>().TakeDamage(attackDamage);
-            }
-            attackCooldown = startAttackCooldown;
+            hitEnemies[i].GetComponent<Enemy>().TakeDamage(AttackStats.MeleeDamage);
         }
-        else
-        {
-            attackCooldown = Time.deltaTime;
-        }
+        _meleeAttackCooldown -= Time.fixedDeltaTime;
+    }
+
+    public void ResetCooldown()
+    {
+        _isMeleeAttacking = false;
+        _meleeAttackCooldown = AttackStats.MeleeCooldown;
     }
 
     private void OnDrawGizmosSelected()
