@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Collider2D _bodyColl;
 
     private Rigidbody2D _rb;
+    public Animator playerAnimator;
 
     // movement vars
     public float HorizontalVelocity { get; private set; }
@@ -104,6 +105,7 @@ public class PlayerMovement : MonoBehaviour
         if (_isGrounded)
         {
             Move(MoveStats.GroundAcceleration, MoveStats.GroundDeceleration, InputManager.Movement);
+            playerAnimator.SetBool("isFalling", false);
         }
         else
         {
@@ -120,6 +122,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         ApplyVelocity();
+
+        playerAnimator.SetBool("isSprinting", HorizontalVelocity != 0 && InputManager.RunIsHeld);
     }
     
     private void ApplyVelocity()
@@ -146,6 +150,7 @@ public class PlayerMovement : MonoBehaviour
             // if absolute value of x on input is greater than or equal to movement threshold, character won't move
             if (Mathf.Abs(moveInput.x) >= MoveStats.MoveThreshold)
             {
+                playerAnimator.SetBool("isWalking", true);
                 // check if player needs to turn
                 Flip(moveInput);
 
@@ -162,6 +167,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (Mathf.Abs(moveInput.x) < MoveStats.MoveThreshold)
             {
+                playerAnimator.SetBool("isWalking", false);
                 // no move input > change move velocity from what it is to nothing based on decel
                 HorizontalVelocity = Mathf.Lerp(HorizontalVelocity, 0f, deceleration * Time.fixedDeltaTime);
             }
@@ -251,6 +257,7 @@ public class PlayerMovement : MonoBehaviour
             if (!_isFalling)
             {
                 _isFalling = true;
+                playerAnimator.SetBool("isFalling", true);
             }
 
             VerticalVelocity += MoveStats.Gravity * Time.fixedDeltaTime;
@@ -324,6 +331,7 @@ public class PlayerMovement : MonoBehaviour
         if (_jumpBufferTimer > 0f && !_isJumping && (_isGrounded || _coyoteTimer > 0f))
         {
             InitiateJump(1);    // initiates one jump
+            playerAnimator.SetTrigger("jump");
 
             if (_jumpReleasedDuringBuffer)
             {
@@ -340,6 +348,8 @@ public class PlayerMovement : MonoBehaviour
         {
             _isFastFalling = false;
             InitiateJump(1);
+            playerAnimator.SetTrigger("jump");
+
 
             if (_isDashFastFalling)
             {
@@ -352,6 +362,7 @@ public class PlayerMovement : MonoBehaviour
         {
             InitiateJump(2);    // uses 2 jumps because it's in the air, not a coyote jump; makes sure you don't fall off a ledge and still get 2 air jumps
             _isFastFalling = false;
+            playerAnimator.SetTrigger("jump");
         }
     }
 
@@ -368,6 +379,7 @@ public class PlayerMovement : MonoBehaviour
         _numberOfJumpsUsed += numberOfJumpsUsed;
         VerticalVelocity = MoveStats.InitialJumpVelocity;
     }
+
     private void Jump()
     {
         // apply gravity while jumping
@@ -423,12 +435,14 @@ public class PlayerMovement : MonoBehaviour
             {   
                 // you can choose to try it without the Multiplier if you'd like
                 VerticalVelocity += MoveStats.Gravity * MoveStats.GravityOnReleaseMultiplier * Time.fixedDeltaTime;
+                playerAnimator.SetBool("isFalling", true);
             }
             else if (VerticalVelocity < 0f)
             {
                 if (!_isFalling)
                 {
                     _isFalling = true;
+                    playerAnimator.SetBool("isFalling", true);
                 }
             }
         }
@@ -500,13 +514,17 @@ public class PlayerMovement : MonoBehaviour
             _numberOfJumpsUsed++;
 
             _isWallSliding = false;
-        }    
+            playerAnimator.SetBool("isWallSliding", false);
+        }
     }
 
     private void WallSlide()
     {
         if (_isWallSliding)
         {
+            playerAnimator.SetBool("isWallSliding", true);
+            playerAnimator.SetBool("isSprinting", false);
+
             VerticalVelocity = Mathf.Lerp(VerticalVelocity, -MoveStats.WallSlideSpeed, MoveStats.WallSlideDecelerationSpeed * Time.fixedDeltaTime);
         }
     }
@@ -527,6 +545,8 @@ public class PlayerMovement : MonoBehaviour
         {
             if (VerticalVelocity > 0f)
             {
+                playerAnimator.SetTrigger("wallJump");
+
                 if (_isPastWallJumpApexThreshold)
                 {
                     _isPastWallJumpApexThreshold = false;
@@ -547,6 +567,7 @@ public class PlayerMovement : MonoBehaviour
         if (InputManager.JumpWasPressed && _wallJumpPostBufferTime > 0f)
         {
             InitiateWallJump();
+            playerAnimator.SetTrigger("wallJump");
         }
     }
 
@@ -642,12 +663,17 @@ public class PlayerMovement : MonoBehaviour
             else if (!_isWallJumpFastFalling)
             {
                 VerticalVelocity += MoveStats.WallJumpGravity * Time.fixedDeltaTime;
+                playerAnimator.SetBool("isFalling", true);
+
             }
 
             else if (VerticalVelocity < 0f)
             {
                 if (!_isWallJumpFalling)
+                {
                     _isWallJumpFalling = true;
+                    playerAnimator.SetBool("isFalling", true);
+                }
             }
         }
 
