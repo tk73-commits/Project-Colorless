@@ -15,9 +15,10 @@ MonoBehaviour:
   npcName: Shopkeeper
   dialogueLines:
   - Hi! I'm the shopkeeper!
-  - The developer hasn't created a shop system yet, so stay tuned!
-  autoProgressLines: 0100
-  endDialogueLines: 0001
+  - By talking to me, you completed the first quest!
+  - Have a Blessing!
+  autoProgressLines: 010100
+  endDialogueLines: 000001
   autoProgressDelay: 1.5
   typingSpeed: 0.05
   choices: []
