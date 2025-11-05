@@ -27,7 +27,7 @@
                     "name": "Run",
                     "type": "Button",
                     "id": "43e2b630-b0fa-4052-bdff-dd60806f9d66",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -36,7 +36,7 @@
                     "name": "Dash",
                     "type": "Button",
                     "id": "36ba2937-c11e-410f-a2b0-67788f978f9e",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -54,7 +54,7 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "ad264215-297b-4184-a4ee-b4daff1d23ff",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -226,6 +226,17 @@
                 },
                 {
                     "name": "",
+                    "id": "fb7dfda7-de34-447f-8441-2fe49ab2b9d8",
+                    "path": "<HID::PowerA NSW wired controller>/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "c9e0edca-c911-4e5a-83e5-3c1f1d3735c9",
                     "path": "<Keyboard>/c",
                     "interactions": "",
@@ -242,6 +253,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4a577a11-8aae-4d12-8fd3-981ffbdd55ec",
+                    "path": "<HID::PowerA NSW wired controller>/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -281,6 +303,28 @@
                 },
                 {
                     "name": "",
+                    "id": "bb903a2b-0382-41c2-ad3c-b9040b149ff6",
+                    "path": "<HID::PowerA NSW wired controller>/hat/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "df7f0ee8-92ad-4ff0-83f1-80ad2e77111f",
+                    "path": "<HID::PowerA NSW wired controller>/stick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "ac1e9da3-81ce-4f91-bf96-5c327f09f451",
                     "path": "<Gamepad>/select",
                     "interactions": "",
@@ -314,6 +358,17 @@
                 },
                 {
                     "name": "",
+                    "id": "3c44d47e-605f-417d-8c53-6c9ce7f97a12",
+                    "path": "<HID::PowerA NSW wired controller>/button9",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "db3a9ab1-84be-4a25-83b4-b7e53162c622",
                     "path": "<Keyboard>/shift",
                     "interactions": "",
@@ -336,6 +391,17 @@
                 },
                 {
                     "name": "",
+                    "id": "d1b9ced9-51ac-4c61-8e79-be4853d71e00",
+                    "path": "<HID::PowerA NSW wired controller>/button7",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "9b6cc284-53e8-452a-8afc-13475c436902",
                     "path": "<Keyboard>/z",
                     "interactions": "",
@@ -349,6 +415,17 @@
                     "name": "",
                     "id": "39aca224-5496-46c4-bb93-1cc7729b9797",
                     "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2f5be857-0f31-4321-9911-337868678134",
+                    "path": "<HID::PowerA NSW wired controller>/button8",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

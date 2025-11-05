@@ -35,7 +35,7 @@ public class PlayerAttack : MonoBehaviour
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPos.position, attackRange, enemyLayers);
         for(int i = 0; i < hitEnemies.Length; i++)
         {
-            hitEnemies[i].GetComponent<Enemy>().TakeDamage(AttackStats.MeleeDamage);
+            //hitEnemies[i].GetComponent<Enemy>().TakeDamage(AttackStats.MeleeDamage);
         }
         _meleeAttackCooldown -= Time.fixedDeltaTime;
     }
