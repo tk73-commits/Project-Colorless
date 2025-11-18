@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using static UnityEditor.Progress;
 
-public class PlayerInventory : MonoBehaviour
+public class PlayerItemCollector : MonoBehaviour
 {
     private InventoryController inventoryController;
 
@@ -20,10 +19,13 @@ public class PlayerInventory : MonoBehaviour
             Item item = collision.GetComponent<Item>();
             if (item != null)
             {
-                // add to inventory
+                // add item to inventory
                 bool itemAdded = inventoryController.AddItem(collision.gameObject);
+
                 if (itemAdded)
+                {
                     Destroy(collision.gameObject);
+                }
             }
         }
     }

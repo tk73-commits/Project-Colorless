@@ -40,6 +40,17 @@ public class PlayerAttack : MonoBehaviour
         _meleeAttackCooldown -= Time.fixedDeltaTime;
     }
 
+    public void RangedAttack()
+    {
+        _isMeleeAttacking = true;
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPos.position, attackRange, enemyLayers);
+        for(int i = 0; i < hitEnemies.Length; i++)
+        {
+            //hitEnemies[i].GetComponent<Enemy>().TakeDamage(AttackStats.MeleeDamage);
+        }
+        _meleeAttackCooldown -= Time.fixedDeltaTime;
+    }
+
     public void ResetCooldown()
     {
         _isMeleeAttacking = false;
