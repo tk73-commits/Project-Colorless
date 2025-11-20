@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0e4481142d525f4ea2b6cc3f48c2bc6, type: 3}
+  m_Name: HungryNPCDialogue
+  m_EditorClassIdentifier: 
+  npcName: Kinako
+  dialogueLines:
+  - Mmm...I'm feeling a little hungry.
+  - Oh! A visitor! Hi! I've never seen a dragon before. You're really small.
+  - Ugh, so hungry...
+  - See you around!
+  - Oh, actually...I've been standing here for the past three hours.
+  - I haven't eaten anything in a while, and now it's kinda biting me in the back.
+  - Haha! Bite.
+  - Okay, thanks! Bye!
+  - Um...If you could, can you get me a Bugbun?
+  - It's pretty easy to find around here! It's like bread, but with bugs.
+  - Eh, it's no problem. See you around!
+  - Oh, thank you so much! I'll be right here. 'Cuz I can't go anywhere.
+  - Mmm, Bugbun...
+  - Ah! You got one! I can really have this?
+  - Thank you! Here, I'll pay you back with this!
+  autoProgressLines: 
+  endDialogueLines: 000000010000000100000101010001
+  autoProgressDelay: 1.5
+  typingSpeed: 0.01
+  questInProgressIndex: 12
+  questCompletedIndex: 13
+  quest: {fileID: 11400000, guid: 6c5191ffed04a294395e4102fac5ac0d, type: 2}
+  choices:
+  - dialogueIndex: 2
+    choices:
+    - Are you okay?
+    - Goodbye.
+    nextDialogueIndexes: 0400000003000000
+    givesQuest: 00
+  - dialogueIndex: 6
+    choices:
+    - Can I help at all?
+    - Hope you feel better soon.
+    nextDialogueIndexes: 0800000007000000
+    givesQuest: 00
+  - dialogueIndex: 9
+    choices:
+    - I'm on it.
+    - On second thought...
+    nextDialogueIndexes: 0b0000000a000000
+    givesQuest: 0100

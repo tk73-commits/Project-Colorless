@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0e4481142d525f4ea2b6cc3f48c2bc6, type: 3}
+  m_Name: OlderSiblingDialogue
+  m_EditorClassIdentifier: 
+  npcName: Azure
+  dialogueLines:
+  - D-Don't cry, Azalea! We'll find your pinwheel!
+  - Man, when is Mom getting back?
+  - ...Oh, hey! Scaly horned guy! Can you help?
+  - My sister lost her pinwheel and we dunno where it is.
+  - I can't leave to go get it, but she won't stop crying...
+  - Can you please find the pinwheel for us?
+  - Thank you so much! Azalea, this guy is gonna find your pinwheel!
+  - ...Please stop crying.
+  - O-Oh, okay. That's okay! I'll figure it out...
+  - Did you find the pinwheel yet?
+  - I think the wind carried it away around the other side of town...
+  - Oh!! Thank you for getting the pinwheel back!
+  - Here, Azalea!
+  - And thanks, mister! I don't have anything cool, but you can have this Bugbun!
+    It's good!
+  autoProgressLines: 
+  endDialogueLines: 0000000000000001010001000001
+  autoProgressDelay: 1.5
+  typingSpeed: 0.01
+  questInProgressIndex: 9
+  questCompletedIndex: 11
+  quest: {fileID: 11400000, guid: 8be84883de1187a499b6446f1e8e597f, type: 2}
+  choices:
+  - dialogueIndex: 5
+    choices:
+    - Yes
+    - No
+    nextDialogueIndexes: 0600000008000000
+    givesQuest: 0100
